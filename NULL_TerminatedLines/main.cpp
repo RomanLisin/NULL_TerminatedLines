@@ -10,6 +10,7 @@ char* to_upper(char str[]);
 char* to_lower(char str[]);
 char* shrink(char str[]);
 bool is_palindrom(const char str[]);
+bool is_number(const char str[]);
 
 void main()
 {
@@ -21,13 +22,14 @@ void main()
 	//char str[] = { 'H', 'e', 'l','l', 'o', 0};
 	//char str[] = "Hello";
 	const int SIZE = 256;
-	char str[SIZE] = " Хорошо         живёт     на        свете      Винни      Пух";
-	cout << "Введите строку: "; 
-	//cin >> str;
-	SetConsoleCP(1251);   // cout выводит символы в кодировке CP866, а cin воспринимает символы в кодировке 1251, поэтому сначала устанавливаем 1251, пото возвращаем в CP866
-	cin.getline(str, SIZE);
-	SetConsoleCP(866);
-	cout << str << endl;
+	char str[SIZE] = "Аргентина манит негра";
+		//char str[SIZE] = " Хорошо         живёт     на        свете      Винни      Пух";
+		//cout << "Введите строку: "; 
+		//cin >> str;
+		//SetConsoleCP(1251);   // cout выводит символы в кодировке CP866, а cin воспринимает символы в кодировке 1251, поэтому сначала устанавливаем 1251, пото возвращаем в CP866
+		//cin.getline(str, SIZE);
+		//SetConsoleCP(866);
+		//cout << str << endl;
 	cout << shrink(str) << endl;
 	cout << "Строка" << (is_palindrom(str) ? "" : " НЕ") << " палиндром" << endl;
 	//cout << "Введите строку: "; 
@@ -89,6 +91,17 @@ char* shrink(char str[])
 	}
 	return str;
 }
+char* remove_symbol(char str[], char symbol)
+{
+	for (int i = 0; str[i]; i++)
+	{
+		while (str[i] == symbol)
+		{
+			for (int j = i; str[j]; j++)str[j] = str[j + 1];
+		}
+	}
+	return str;
+}
 bool is_palindrom(const char str[])
 {
 	bool is_palindrom = true;
@@ -97,10 +110,25 @@ bool is_palindrom(const char str[])
 	char* buffer = new char[n+1];
 	strcpy(buffer, str);
 	to_lower(buffer);
+	remove_symbol(buffer, ' ');
+	n = strlen(buffer);
 	for (int i = 0; i < n / 2; i++)
 	{
-		if (buffer[i] != buffer[n - 1 - i])is_palindrom= false;
+		if (buffer[i] != buffer[n - 1 - i])
+		{
+			is_palindrom = false;
+			break;
+		}
 	}
 	delete[] buffer;
 	return is_palindrom;
+}
+bool is_number(const char str[])  
+{
+	for (int i = 0; str[i]; i++)
+	{
+		if (str[i] < '0' || str[i]>'9')return false;
+	}
+	return true;
+	
 }
