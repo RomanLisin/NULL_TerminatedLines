@@ -10,7 +10,8 @@ char* to_upper(char str[]);
 char* to_lower(char str[]);
 char* shrink(char str[]);
 bool is_palindrom(const char str[]);
-bool is_number(const char str[]);
+bool is_int_number(const char str[]);
+int to_int_number(const char str[]);
 
 void main()
 {
@@ -32,17 +33,17 @@ void main()
 		//cout << str << endl;
 	cout << shrink(str) << endl;
 	cout << "Строка" << (is_palindrom(str) ? "" : " НЕ") << " палиндром" << endl;
-	//cout << "Введите строку: "; 
-	////cin >> str;
-	//SetConsoleCP(1251);   // cout выводит символы в кодировке CP866, а cin воспринимает символы в кодировке 1251, поэтому сначала устанавливаем 1251, пото возвращаем в CP866
-	//cin.getline(str, SIZE);
-	//SetConsoleCP(866);
-	//cout << str << endl << "Размер строки: " << string_length(str) << endl;
-	//cout << "Строка в верхнем регистре: " << to_upper(str) << endl;
-	//cout << "Строка в нижнем регистре: " << to_lower(str) <<  endl;
-	
+	cout << "Введите строку: "; 
+	//cin >> str;
+	SetConsoleCP(1251);   // cout выводит символы в кодировке CP866, а cin воспринимает символы в кодировке 1251, поэтому сначала устанавливаем 1251, пото возвращаем в CP866
+	cin.getline(str, SIZE);
+	SetConsoleCP(866);
+	cout << str << endl << "Размер строки: " << string_length(str) << endl;
+	cout << "Строка в верхнем регистре: " << to_upper(str) << endl;
+	cout << "Строка в нижнем регистре: " << to_lower(str) <<  endl;
+	cout << "Строка - " << (is_int_number(str) ? "" : "НЕ ") << "число" << endl;
 
-
+	cout << to_int_number(str) * 2 << endl;
 
 
 }
@@ -123,7 +124,7 @@ bool is_palindrom(const char str[])
 	delete[] buffer;
 	return is_palindrom;
 }
-bool is_number(const char str[])  
+bool is_int_number(const char str[])  
 {
 	for (int i = 0; str[i]; i++)
 	{
@@ -131,4 +132,18 @@ bool is_number(const char str[])
 	}
 	return true;
 	
+}
+int to_int_number(const char str[])
+{
+	int number = 0;
+	if (is_int_number(str))
+	{
+		for (int i = 0; str[i]; i++)
+		{
+			number *= 10;
+			number += str[i] - '0';
+		}
+
+	}
+	return number;
 }
